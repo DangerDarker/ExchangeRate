@@ -1,8 +1,10 @@
 package com.mt.recyclerAdapter;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mt.buddy.CurrencyBuddy;
+import com.mt.database.DatabaseHelper;
 import com.mt.exchangerate.MainActivity;
 import com.mt.exchangerate.R;
 
@@ -80,6 +83,11 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CurrencyBuddy currencyBuddy = mList.get(position);
+        SQLiteDatabase db = new DatabaseHelper(mContext).getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CurrencyBuddy.DataSchema.CNAME , currencyBuddy.getCname());
+        cv.put(CurrencyBuddy.DataSchema.ENAME , currencyBuddy.getEname());
+        db.insert("currency" , null ,cv);
         holder.ename.setText(currencyBuddy.getEname());
         holder.cname.setText(currencyBuddy.getCname());
     }

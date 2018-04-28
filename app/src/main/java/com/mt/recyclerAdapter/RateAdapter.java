@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mt.buddy.RateBuddy;
+import com.mt.buddy.RecyclerItem;
 import com.mt.exchangerate.MainActivity;
 import com.mt.exchangerate.R;
 
@@ -21,10 +22,10 @@ import java.util.ArrayList;
 
 public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
 
-    ArrayList<RateBuddy> mList ;
+    ArrayList<RecyclerItem> mList ;
     private Activity mContext;
 
-    public RateAdapter(ArrayList<RateBuddy> list , Activity activity){
+    public RateAdapter(ArrayList<RecyclerItem> list , Activity activity){
         this.mList = list;
         this.mContext = activity;
     }
@@ -56,12 +57,14 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        RateBuddy rateBuddy = mList.get(position);
+        RecyclerItem rateBuddy = mList.get(position);
         if(rateBuddy != null){
-            holder.cname.setText(rateBuddy.getCname());
-          //  holder.ename.setText(rateBuddy.getEname());
-            holder.money.setText(rateBuddy.getRate());
-            holder.date.setText(rateBuddy.getDate());
+            holder.cname.setText(rateBuddy.getRateBuddy().getCname());
+            holder.ename.setText(rateBuddy.getRateBuddy().getEname());
+            holder.rate.setText(rateBuddy.getRateBuddy().getRate());
+            holder.date.setText(rateBuddy.getRateBuddy().getDate());
+            String mo = String.valueOf(rateBuddy.getMoney());
+            holder.money.setText(mo);
             holder.position = position;
         }
 
@@ -74,18 +77,20 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
 
     public class ViewHolder extends  RecyclerView.ViewHolder{
         private TextView cname ;
-        //private TextView ename ;
-        private TextView money ;
+        private TextView ename ;
+        private TextView rate ;
         private TextView date ;
+        private TextView money;
         public View rateView;
         public int position ;
         public ViewHolder(View v ){
             super(v);
             rateView = v ;
             cname = v.findViewById(R.id.country_cname);
-          //  ename = v.findViewById(R.id.country_ename);
-            money = v.findViewById(R.id.rate_money);
+             ename = v.findViewById(R.id.country_ename);
+            rate = v.findViewById(R.id.rate_money);
             date = v.findViewById(R.id.date);
+            money = v.findViewById(R.id.money);
 
         }
     }

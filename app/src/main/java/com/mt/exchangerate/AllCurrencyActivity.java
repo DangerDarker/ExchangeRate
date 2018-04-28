@@ -29,7 +29,8 @@ public class AllCurrencyActivity extends AppCompatActivity {
         final AcquireCurrency acquireCurrency = new AcquireCurrency();
         final Activity context = this;
         if(Config.CURRENCY_LIST.size() > 0){
-            CurrencyAdapter currencyAdapter = new CurrencyAdapter(Config.CURRENCY_LIST , context);rv.setAdapter(currencyAdapter);
+            CurrencyAdapter currencyAdapter = new CurrencyAdapter(Config.CURRENCY_LIST , context);
+            rv.setAdapter(currencyAdapter);
             rv.setLayoutManager(new LinearLayoutManager(context));
 
         }else{

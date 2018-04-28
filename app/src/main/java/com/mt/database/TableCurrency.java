@@ -12,6 +12,6 @@ public class TableCurrency {
     SQLiteDatabase sd = new DatabaseHelper(mContext).getWritableDatabase();
 
     public void add(){
-
+       // sd.execSQL();
     }
 }

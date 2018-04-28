@@ -7,36 +7,52 @@
     android:layout_margin="2dp"
     app:cardCornerRadius="4dp"
     android:foreground="?android:attr/selectableItemBackground">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50sp">
+        android:layout_height="60sp">
+
         <TextView
             android:id="@+id/country_cname"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:text="maaa"
+            android:textSize="30sp" />
+        <TextView
+            android:id="@+id/country_ename"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/country_cname"
+            android:text="maaa"
             android:textSize="30sp"
-            android:layout_alignParentLeft="true"/>
-        <!--<TextView-->
-            <!--android:id="@+id/country_ename"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:textSize="25sp"-->
-            <!--android:gravity="bottom"-->
-            <!--android:layout_toRightOf="@+id/country_cname"/>-->
+            />
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10000"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"/>
         <TextView
             android:id="@+id/rate_money"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20sp"
-            android:layout_alignParentRight="true"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/money"
+            android:text="maaa"
+            android:textSize="15sp" />
+
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/rate_money"
+            android:textSize="10sp"
+            android:text="maaa" />
 
     </RelativeLayout>
 
