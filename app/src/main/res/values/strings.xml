@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ExchangeRate</string>
+    <string name="rate_query">汇率查询</string>
+    <string name="rate_convert">汇率转换</string>
+    <string name="waihui">牌价</string>
+    <string name="title_activity_show">ShowActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="search">搜索 可输入货币中文或英文简称</string>
 </resources>
