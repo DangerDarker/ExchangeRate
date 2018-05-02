@@ -67,8 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="确定"
-                    android:background="@color/colorPrimary"
-                    app:
+                    android:background="@color/button"
                     />
 
 
@@ -96,7 +95,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:background="@color/colorPrimary"
+                android:background="@color/button"
                 android:text="添加币种" />
         </RelativeLayout>
 
