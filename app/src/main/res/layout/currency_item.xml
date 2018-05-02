@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:background="@color/currency_not_selected"
+        android:background="@color/frate_bkg"
         android:id="@+id/relative_layout"
         >
 

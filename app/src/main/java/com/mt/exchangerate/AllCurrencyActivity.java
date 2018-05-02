@@ -39,13 +39,13 @@ public class AllCurrencyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_currency);
-
         Toolbar toolbar = findViewById(R.id.toolbar_currency);
         setSupportActionBar(toolbar);
         ActionBar actionBar;
         actionBar = getSupportActionBar();
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("选择币种");
         }
         sv =  findViewById(R.id.currency_search);
         rv = findViewById(R.id.recycler_currency);
@@ -102,6 +102,7 @@ public class AllCurrencyActivity extends AppCompatActivity {
                 }).start();
             }
         }
+        sv.setIconifiedByDefault(false);
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -126,8 +126,8 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
                     mList = cu;
 
                 }else{
-                    mList.clear();
-                    Toast.makeText(mContext , "无匹配！" ,Toast.LENGTH_LONG).show();
+                   // mList.clear();
+                    Toast.makeText(mContext , "无匹配！" ,Toast.LENGTH_SHORT).show();
                 }
                 notifyDataSetChanged();
 
