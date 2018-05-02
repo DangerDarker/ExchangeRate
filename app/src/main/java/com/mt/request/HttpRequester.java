@@ -3,6 +3,8 @@ package com.mt.request;
 import android.util.Log;
 
 //import org.json.JSONArray;
+import com.mt.exchangerate.Plugin;
+
 import org.apache.http.HttpResponse;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -64,7 +66,6 @@ public class HttpRequester{
         URL url;
         InputStream din;
         BufferedReader cin;
-
         try {
             if (isGet) {
                 if(sb.length() > 0){

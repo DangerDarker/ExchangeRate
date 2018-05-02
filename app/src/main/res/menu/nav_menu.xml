@@ -8,9 +8,6 @@
             android:title="@string/rate_query"
             android:checked="true"/>
         <item
-            android:id="@+id/rate_convert"
-            android:title="@string/rate_convert"/>
-        <item
             android:id="@+id/waihui"
             android:title="@string/waihui"/>
     </group>

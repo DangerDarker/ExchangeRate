@@ -7,7 +7,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,13 +20,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.mt.buddy.CurrencyBuddy;
 import com.mt.buddy.RateBuddy;
 import com.mt.buddy.RecyclerItem;
-import com.mt.database.DatabaseHelper;
 import com.mt.recyclerAdapter.RateAdapter;
+
+import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,13 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String CName;
     private Button add;
     private Button Ok ;
-    private static boolean isChanged = false;
+    public static boolean isStarted = false;
     public static  HashMap<String ,RateBuddy> rateBuddyMap;
     public static String SOURCR;
     private ArrayList<RateBuddy> rateBuddies;
     private ArrayList<RecyclerItem> buddies;
     private AcquireSingleRate acquireSingleRate ;
     RateAdapter rateAdapter;
+    private String source;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        isStarted = true;
         rateBuddies = new ArrayList<>();
         rateBuddyMap = new HashMap<>();
         buddies = new ArrayList<>();
-        DatabaseHelper databaseHelper = new DatabaseHelper(this); // 建立数据库 与 表
+        Connector.getDatabase();// 建立数据库
         linearLayout = findViewById(R.id.source_currency);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-
+        progressBar = findViewById(R.id.progress_bar);
 
         recyclerView = findViewById(R.id.country_rate);
         et = findViewById(R.id.edit_money);
@@ -85,10 +89,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                if(getString(R.string.rate_convert).equals(item.getTitle())){
+                if(getString(R.string.rate_query).equals(item.getTitle())){
 
                 }else if(getString(R.string.waihui).equals(item.getTitle())){
-
+                    Intent intent = new Intent(MainActivity.this , FrateActivity.class);
+                    startActivity(intent);
                 }else{  //rate query
 
                 }
@@ -140,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
+        source = tv.getText().toString();
 
     }
 
@@ -179,15 +185,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             CName = data.getStringExtra("cname");
             EName = data.getStringExtra("ename");
             tv.setText(CName);
-            isChanged = true;
+            //isChanged = true;
             //原 币  改变  则list中的rate也会改变
             SOURCR = CName;
             changeSource(CName);
         }else if(requestCode == 8 && resultCode == RESULT_OK){
+            progressBar.setVisibility(View.VISIBLE);
             addRate(data.getStringExtra("ename"));  // 根据英文 获取
             String cname = data.getStringExtra("cname"); // 获取中文
            // rateBuddies.add(rateBuddyMap.get(cname)); // 放入list
             //rateAdapter.notifyDataSetChanged();
+
         }
     }
 
@@ -195,77 +203,101 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final  String[] str = tv.getText().toString().split(":");
         Log.i("MAINACTIVITY" , "addRate: "+str[0]);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                 String m = et.getText().toString();
-                if(m == null || "".equals(m)){
-                    m = "0.0";
-                }
-                acquireSingleRate = new AcquireSingleRate(Config.CURRENCY_MAP.get(str[0]).getEname());
-                if(acquireSingleRate.getResultCode() == Config.JSType.RESULT_CODE_OK){
-                    RateBuddy rateBuddy = acquireSingleRate.getRateBuddy(cname);
-                    rateBuddyMap.put( rateBuddy.getCname(),rateBuddy );
-                    rateBuddies.add(rateBuddyMap.get(rateBuddy.getCname())); // 放入list
-                    RecyclerItem rt = new RecyclerItem(rateBuddy , m);
-                    buddies.add(rt);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            rateAdapter.notifyDataSetChanged();
-                        }
-                    });
+        if(!Plugin.isNetworkAvailable(this)){
+            Toast.makeText(this , "请打开网络连接..." , Toast.LENGTH_LONG).show();
+        }else{
 
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String m = et.getText().toString();
+                    if(m == null || "".equals(m)){
+                        m = "0.0";
+                    }
+
+                    if(!str[0].equals(source)){
+                        acquireSingleRate = new AcquireSingleRate(Config.CURRENCY_MAP.get(str[0]).getEname());
+                    }else{
+                        source = str[0];
+                    }
+                    if(acquireSingleRate == null){
+                        acquireSingleRate = new AcquireSingleRate(Config.CURRENCY_MAP.get(str[0]).getEname());
+                    }
+
+                    if(acquireSingleRate.getResultCode() == Config.JSType.RESULT_CODE_OK){
+                        RateBuddy rateBuddy = acquireSingleRate.getRateBuddy(cname);
+                        Log.i("AddRate", "run: " + rateBuddy.getEname() + rateBuddy.getCname());
+                        rateBuddyMap.put( rateBuddy.getCname(),rateBuddy );
+                        rateBuddies.add(rateBuddyMap.get(rateBuddy.getCname())); // 放入list
+                        final RecyclerItem rt = new RecyclerItem(rateBuddy , m);
+
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                buddies.add(rt);
+                                rateAdapter.notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
+
+                    }
                 }
-            }
-        }).start();
+            }).start();
+        }
+
     }
 
     public void changeSource(final String source){
         rateBuddies.clear();
 
+        buddies.clear();
         final Iterator iter  = rateBuddyMap.entrySet().iterator();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                boolean isSource = false;
-                acquireSingleRate = new AcquireSingleRate(Config.CURRENCY_MAP.get(source).getEname());
-                if(acquireSingleRate.getResultCode() == Config.JSType.RESULT_CODE_OK){
-                    while(iter.hasNext()){
-                         String m = et.getText().toString();
-                        if(m == null || "".equals(m)){
-                            m = "0.0";
-                        }
-                        Map.Entry entry = (Map.Entry)iter.next();
-                        RateBuddy rateBuddy = (RateBuddy)entry.getValue();
-                        String cname = (String)entry.getKey();
-                        String ename = rateBuddy.getEname();
-                        if(!cname.equals(source)){
-                            rateBuddy = acquireSingleRate.getRateBuddy(Config.CURRENCY_MAP.get(cname).getEname());
-                            rateBuddyMap.put(cname , rateBuddy);
-                            Log.i("ChangeSource", "run: "+ cname + "  "+ rateBuddy.getEname());
-                            rateBuddies.add(rateBuddy);
-                            buddies.add(new RecyclerItem(rateBuddy , m));
-                        }else{
-                           isSource = true;
+        if(!Plugin.isNetworkAvailable(this)){
+            Toast.makeText(this , "请打开网络连接..." , Toast.LENGTH_LONG).show();
+        }else{
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    boolean isSource = false;
+                    acquireSingleRate = new AcquireSingleRate(Config.CURRENCY_MAP.get(source).getEname());
+                    if(acquireSingleRate.getResultCode() == Config.JSType.RESULT_CODE_OK){
+                        while(iter.hasNext()){
+                            String m = et.getText().toString();
+                            if(m == null || "".equals(m)){
+                                m = "0.0";
+                            }
+                            Map.Entry entry = (Map.Entry)iter.next();
+                            RateBuddy rateBuddy = (RateBuddy)entry.getValue();
+                            String cname = (String)entry.getKey();
+                            String ename = rateBuddy.getEname();
+                            if(!cname.equals(source)){
+                                rateBuddy = acquireSingleRate.getRateBuddy(Config.CURRENCY_MAP.get(cname).getEname());
+                                rateBuddyMap.put(cname , rateBuddy);
+                                Log.i("ChangeSource", "run: "+ cname + "  "+ rateBuddy.getEname());
+                                rateBuddies.add(rateBuddy);
+                                buddies.add(new RecyclerItem(rateBuddy , m));
+                            }else{
+                                isSource = true;
 //                            entry = (Map.Entry)iter.next();
-                        }
+                            }
 
-                    }
-                    if(isSource){
-                        rateBuddyMap.remove(source);
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            rateAdapter.notifyDataSetChanged();
                         }
-                    });
+                        if(isSource){
+                            rateBuddyMap.remove(source);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                rateAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+
                 }
+            }).start();
+        }
 
-            }
-        }).start();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {

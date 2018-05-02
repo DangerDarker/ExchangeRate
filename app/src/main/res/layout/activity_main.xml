@@ -70,6 +70,14 @@
 
             </LinearLayout>
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/country_rate"
                 android:layout_width="wrap_content"
@@ -88,19 +96,6 @@
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
-
-    <!--<android.support.design.widget.BottomNavigationView-->
-        <!--android:id="@+id/navigation"-->
-        <!--android:layout_width="384dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="?android:attr/windowBackground"-->
-        <!--app:menu="@menu/navigation"-->
-        <!--tools:layout_editor_absoluteY="567dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--/>-->
-
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"

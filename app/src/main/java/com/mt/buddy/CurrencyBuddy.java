@@ -36,8 +36,5 @@ public class CurrencyBuddy {
         }
         return new CurrencyBuddy(Ename , Cname);
     }
-    public static class DataSchema{
-        public static final String ENAME = "ename";
-        public static final String CNAME = "cname";
-    }
+
 }

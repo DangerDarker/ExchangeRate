@@ -31,6 +31,13 @@
             android:layout_height="wrap_content"
             app:queryHint="@string/search"
             />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_currency"
             android:layout_width="match_parent"

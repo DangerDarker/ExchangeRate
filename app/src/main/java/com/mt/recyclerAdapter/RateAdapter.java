@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.mt.buddy.RateBuddy;
 import com.mt.buddy.RecyclerItem;
+import com.mt.exchangerate.Config;
 import com.mt.exchangerate.MainActivity;
 import com.mt.exchangerate.R;
 
@@ -41,10 +43,15 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
                 builder.setItems(new String[]{"删除"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mList.remove(viewHolder.position);
+                        if(mList.size() == 1){
+                            mList.clear();
+                        }else{
+                            mList.remove(viewHolder.position);
+                        }
+
                        // notifyItemRangeRemoved(viewHolder.position , mList.size()-);
                         notifyItemRemoved(viewHolder.position );
-                        MainActivity.rateBuddyMap.remove(viewHolder.cname);
+                        MainActivity.rateBuddyMap.remove(viewHolder.cname.getText().toString());
                         notifyItemRangeChanged(viewHolder.position , mList.size() -1 );
                     }
                 });
@@ -59,8 +66,10 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         RecyclerItem rateBuddy = mList.get(position);
         if(rateBuddy != null){
+            Log.i("RateAddapter", "onBindViewHolder: "+rateBuddy.getRateBuddy().getEname() + "  "+rateBuddy.getRateBuddy().getCname());
+            String Ename = Config.CURRENCY_MAP.get(rateBuddy.getRateBuddy().getCname()).getEname();
             holder.cname.setText(rateBuddy.getRateBuddy().getCname());
-            holder.ename.setText(rateBuddy.getRateBuddy().getEname());
+            holder.ename.setText(Ename);
             holder.rate.setText(rateBuddy.getRateBuddy().getRate());
             holder.date.setText(rateBuddy.getRateBuddy().getDate());
             String mo = String.valueOf(rateBuddy.getMoney());
