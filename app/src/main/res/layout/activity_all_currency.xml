@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AllCurrencyActivity"
-    android:background="@color/background"
+    android:background="@color/currency_not_selected"
     >
 
     <android.support.design.widget.AppBarLayout
@@ -15,7 +15,7 @@
             android:id="@+id/toolbar_currency"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/textcolor"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 

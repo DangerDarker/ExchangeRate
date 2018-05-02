@@ -5,9 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="currency_not_selected">#ffffff</color>
     <color name="currency_selected">#3F51B5</color>
-    <color name="background">#123455</color>
-    <color name="currency_bkg">#FF082846</color>
-    <color name="frate_bkg">#FF05549E</color>\
+    <color name="money_item">#84d4f9</color>
+    <color name="text_bkg">#62b2fd</color>\
     <color name="textcolor">#FF3E9BF2</color>
-    <color name="button">#FF287B81</color>
+    <color name="currency_bkg">#FFEEFFFE</color>
 </resources>
