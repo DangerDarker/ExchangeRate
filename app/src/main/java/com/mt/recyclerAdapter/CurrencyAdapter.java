@@ -124,11 +124,12 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
                 ArrayList<CurrencyBuddy> cu = (ArrayList<CurrencyBuddy>) filterResults.values;
                 if(cu.size() > 0){
                     mList = cu;
-                    notifyDataSetChanged();
+
                 }else{
+                    mList.clear();
                     Toast.makeText(mContext , "无匹配！" ,Toast.LENGTH_LONG).show();
                 }
-
+                notifyDataSetChanged();
 
             }
         };

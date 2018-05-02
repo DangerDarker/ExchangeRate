@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -36,6 +40,13 @@ public class AllCurrencyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_currency);
 
+        Toolbar toolbar = findViewById(R.id.toolbar_currency);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         sv =  findViewById(R.id.currency_search);
         rv = findViewById(R.id.recycler_currency);
         progressBar = findViewById(R.id.progress_bar);
@@ -91,12 +102,6 @@ public class AllCurrencyActivity extends AppCompatActivity {
                 }).start();
             }
         }
-
-        //sv.setSuggestionsAdapter(new SimpleCursorAdapter(AllCurrencyActivity.this , R.layout.item_layout , ));
-     //   adapter = new ArrayAdapter(AllCurrencyActivity.this , android.R.layout.simple_list_item_1 ,arr );
-
-    //    rv.setAdapter(adapter);
-      //  ListView l;l.setFilterText();
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -105,42 +110,17 @@ public class AllCurrencyActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                String name = "cname";
-//                if(conValidate(newText)){
-//                    name = "ename";
-//                }
-//               // Cursor cursor = TextUtils.isEmpty(newText) ? null : queryData(newText);
-//                if (sv.getSuggestionsAdapter() == null) {
-//                //    sv.setSuggestionsAdapter(new SimpleCursorAdapter(AllCurrencyActivity.this, R.layout.item_layout, cursor, new String[]{name}, new int[]{R.id.text1}));
-//                } else {
-//                   // sv.getSuggestionsAdapter().changeCursor(cursor);
-//                }
                 adapter.getFilter().filter(newText);
-
                 return false;
             }
         });
     }
 
-    private Cursor queryData(String s){
-
-        Cursor cursor = null;
-        if(conValidate(s)){
-            String querySql = "select * from Currency where ename like '%" + s + "%'";
-            cursor = DataSupport.findBySQL(querySql);//.where("ename like '% ? %'" , s).;
-        }else{
-            String querySql = "select * from Currency where cname like '%" + s + "%'";
-            cursor = DataSupport.findBySQL(querySql);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            this.finish();
         }
-        return  cursor;
-    }
-    private boolean conValidate(String con) {  //判断 con  是否为英文
-        if (null != con && !"".equals(con)) {
-            if ((con.matches("^[A-Za-z]+$"))
-                    && con.length() <= 10) {
-                return true;
-            }
-        }
-        return false;
+        return  true;
     }
 }
