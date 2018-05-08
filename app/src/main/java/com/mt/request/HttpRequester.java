@@ -134,9 +134,7 @@ public class HttpRequester{
         JSONObject result = null;
         String get = null;
         try {
-            Log.i(TAG, "urlString:" + urlString + "?" + sb.toString() + " start...");
             get = send(urlString , true);//(urlString, isGet);
-            Log.i(TAG, "urlString:" + urlString +"?"+sb.toString() + " result~~~~~~~~~~~~~~~~~~~~:" + get);
             result = new JSONObject(get);
         } catch (Exception e) {
             // responseString = get;
@@ -148,9 +146,7 @@ public class HttpRequester{
         JSONObject result = null;
         String get = null;
         try {
-            Log.i(TAG, "urlString:" + urlString + "?" + sb.toString() + " start...");
             get = send;//(urlString, isGet);
-            Log.i(TAG, "urlString:" + urlString +"?"+sb.toString() + " result~~~~~~~~~~~~~~~~~~~~:" + get);
             result = new JSONObject(get);
         } catch (Exception e) {
            // responseString = get;

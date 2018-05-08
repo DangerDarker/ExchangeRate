@@ -102,7 +102,7 @@ public class AllCurrencyActivity extends AppCompatActivity {
                 }).start();
             }
         }
-        sv.setIconifiedByDefault(false);
+        //sv.setIconifiedByDefault(false);
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
