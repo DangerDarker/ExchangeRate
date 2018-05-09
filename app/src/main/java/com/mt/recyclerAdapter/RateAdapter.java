@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mt.buddy.ItemData;
 import com.mt.buddy.RateBuddy;
 import com.mt.buddy.RecyclerItem;
 import com.mt.exchangerate.Config;
 import com.mt.exchangerate.MainActivity;
 import com.mt.exchangerate.R;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 
@@ -48,15 +51,16 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
                         }else{
                             mList.remove(viewHolder.position);
                         }
-
-                       // notifyItemRangeRemoved(viewHolder.position , mList.size()-);
                         notifyItemRemoved(viewHolder.position );
                         MainActivity.rateBuddyMap.remove(viewHolder.cname.getText().toString());
                         notifyItemRangeChanged(viewHolder.position , mList.size() -1 );
+                        if("人民币".equals(MainActivity.SOURCR)){
+                            DataSupport.deleteAll(ItemData.class , "cname = ?" , viewHolder.cname.getText().toString());
+                            //删除条目时也删除数据库中相应数据
+                        }
                     }
                 });
                 builder.show();
-              //  notifyDataSetChanged();
             }
         });
         return viewHolder;

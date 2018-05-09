@@ -7,7 +7,6 @@
     android:layout_margin="2dp"
     app:cardCornerRadius="4dp"
     android:foreground="?android:attr/selectableItemBackground"
-
     app:cardBackgroundColor="@color/currency_bkg">
 
     <RelativeLayout
@@ -20,7 +19,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:gravity="center"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:text="人民币"
+            android:textColor="#000000"/>
         <TextView
             android:id="@+id/country_ename"
             android:layout_width="wrap_content"
@@ -28,6 +29,7 @@
             android:gravity="center"
             android:layout_toRightOf="@+id/country_cname"
             android:textSize="25sp"
+            android:text="RMB"
             />
         <TextView
             android:id="@+id/money"
@@ -42,7 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/money"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:text="1.222"
+            android:textColor="#000000"/>
 
         <TextView
             android:id="@+id/date"
@@ -53,6 +57,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/rate_money"
             android:textSize="10sp"
+            android:text="2011-01-11"
             />
 
     </RelativeLayout>

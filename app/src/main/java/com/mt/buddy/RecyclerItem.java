@@ -1,6 +1,5 @@
 package com.mt.buddy;
 
-import android.support.v7.widget.RecyclerView;
 
 /**
  * Created by Mr_L on 2018/4/28.

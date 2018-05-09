@@ -48,7 +48,7 @@
                         android:layout_weight="1"
                         android:text="人民币"
                         android:gravity="center"
-                        android:textSize="30sp"
+                        android:textSize="20sp"
                         android:textColor="@color/text_bkg"
                         />
                     <EditText
@@ -67,7 +67,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="确定"
-                    android:background="@color/textcolor"
+                    android:background="@drawable/round"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#ffffff"
                     />
 
 
@@ -95,8 +99,12 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:background="@color/textcolor"
-                android:text="添加币种" />
+                android:background="@drawable/round"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="添加目标币种"
+                android:textColor="#ffffff"/>
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>

@@ -4,5 +4,6 @@
     <version value="1"/>
     <list>
         <mapping class = "com.mt.buddy.Currency" />
+        <mapping class = "com.mt.buddy.ItemData" />
     </list>
 </litepal>

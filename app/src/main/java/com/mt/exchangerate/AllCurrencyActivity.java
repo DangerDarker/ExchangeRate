@@ -53,15 +53,7 @@ public class AllCurrencyActivity extends AppCompatActivity {
         sv.setSubmitButtonEnabled(true);
         final AcquireCurrency acquireCurrency = new AcquireCurrency();
         final Activity context = this;
-        List<Currency> arr = DataSupport.findAll(Currency.class);
-        if(arr.size() > 0 && MainActivity.isStarted){
-            if(Config.CURRENCY_LIST.size()> 0)
-                Config.CURRENCY_LIST.clear();
-            for(Currency c : arr){
-                Config.CURRENCY_LIST.add(new CurrencyBuddy(c.getEname() , c.getCname()));
-                Config.CURRENCY_MAP.put(c.getCname() , new CurrencyBuddy(c.getEname() , c.getCname()));
-            }
-        }
+
         if(Config.CURRENCY_LIST.size() > 0){
             adapter  = new CurrencyAdapter(Config.CURRENCY_LIST , context);
             rv.setAdapter(adapter);
