@@ -29,6 +29,7 @@ import com.mt.buddy.CurrencyBuddy;
 import com.mt.buddy.ItemData;
 import com.mt.buddy.RateBuddy;
 import com.mt.buddy.RecyclerItem;
+import com.mt.chatrobot.RobotMain;
 import com.mt.recyclerAdapter.RateAdapter;
 
 import org.litepal.crud.DataSupport;
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(getString(R.string.rate_query).equals(item.getTitle())){
 
                 }else if(getString(R.string.waihui).equals(item.getTitle())){
-                    Intent intent = new Intent(MainActivity.this , FrateActivity.class);
+                    Intent intent = new Intent(MainActivity.this , RobotMain.class);
                     startActivity(intent);
                 }else{  //rate query
 
@@ -335,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
+           // this.finish();
             drawerLayout.openDrawer(GravityCompat.START);
         }
         return  true;

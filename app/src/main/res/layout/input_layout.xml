@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="horizontal">
+    <!--android:background="@drawable/rect_shape_white"-->
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/yk" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:paddingLeft="10dp">
+
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:textSize="14sp" />
+
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:background="#4CAF50"
+            android:gravity="center"
+            android:onClick="sendMessage"
+            android:text="@string/send"
+            android:textColor="#FFF"
+            android:textSize="14sp" />
+            <!--android:visibility="gone" />-->
+
+    </LinearLayout>
+
+</LinearLayout>

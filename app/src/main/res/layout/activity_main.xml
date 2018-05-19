@@ -58,7 +58,6 @@
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
                         android:maxLength="12"
-
                     />
                 </LinearLayout>
 
@@ -73,8 +72,6 @@
                     android:layout_marginBottom="5dp"
                     android:textColor="#ffffff"
                     />
-
-
             </LinearLayout>
 
             <ProgressBar
@@ -114,4 +111,5 @@
         android:layout_height="match_parent"
         app:menu="@menu/nav_menu"
         android:layout_gravity="start"/>
+
 </android.support.v4.widget.DrawerLayout>

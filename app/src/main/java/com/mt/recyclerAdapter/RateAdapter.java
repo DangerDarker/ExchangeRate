@@ -55,6 +55,7 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
                         MainActivity.rateBuddyMap.remove(viewHolder.cname.getText().toString());
                         notifyItemRangeChanged(viewHolder.position , mList.size() -1 );
                         if("人民币".equals(MainActivity.SOURCR)){
+                            //if()
                             DataSupport.deleteAll(ItemData.class , "cname = ?" , viewHolder.cname.getText().toString());
                             //删除条目时也删除数据库中相应数据
                         }
