@@ -11,8 +11,6 @@ public class Lists implements Serializable {
     //软件下载
     public String name = null;
     public String count = null;
-    //public String detailurl;
-    //public String icon;
     //列车
     public String trainnum = null;
     public String start = null;
@@ -30,16 +28,9 @@ public class Lists implements Serializable {
     //public String detailurl;
     //public String icon;
     //电影--视频--菜谱--小说
-    //public String name;
     public String info = null;
-    //public String detailurl;
-    //public String icon;
     //酒店
-    //public String name;
     public String price = null;
     public String satisfaction = null;
-    //public String count;
-    //public String detailurl;
-    //public String icon;
 
 }

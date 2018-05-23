@@ -12,101 +12,60 @@ public class Tuling {
 
     private String Uri;
 
-    /**
-     * 获取消息内容
-     *
-     * @return
-     */
+
+    // 获取消息内容
     public String getInfo() {
         return info;
     }
 
-    /**
-     * 设置消息内容
-     *
-     * @param info
-     */
+
+    // 设置消息内容
     public void setInfo(String info) {
         this.info = info;
     }
 
-    /**
-     * 获取userId
-     *
-     * @return
-     */
+
+     //获取userId
     public String getUserId() {
         return userId;
     }
 
-    /**
-     * 设置userId
-     *
-     * @param userId
-     */
+   //设置userId
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    /**
-     * 获取位置信息
-     *
-     * @return
-     */
+  // 获取位置信息
     public String getLoc() {
         return loc;
     }
 
-    /**
-     * 设置位置信息
-     *
-     * @param loc
-     */
+  // 设置位置信息
     public void setLoc(String loc) {
         this.loc = loc;
     }
 
-    /**
-     * 获取经度信息
-     *
-     * @return
-     */
+  // 获取经度信息
     public String getLon() {
         return lon;
     }
 
-    /**
-     * 设置经度信息
-     *
-     * @param lon
-     */
+   // 设置经度信息
     public void setLon(String lon) {
         this.lon = lon;
     }
 
-    /**
-     * 获取纬度信息
-     *
-     * @return
-     */
+    // 获取纬度信息
     public String getLat() {
         return lat;
     }
 
-    /**
-     * 设置纬度信息
-     *
-     * @param lat
-     */
+   // 设置纬度信息
     public void setLat(String lat) {
         this.lat = lat;
     }
 
-    /**
-     * 返回生成的uri
-     *
-     * @return
-     */
+    // 返回生成的uri
     public String generateUri() {
         String uri = API_URI + "?" + "key=" + TULING_KEY + "&" + "info=" + this.getInfo()
                 + "&" + "userid=" + this.getUserId();

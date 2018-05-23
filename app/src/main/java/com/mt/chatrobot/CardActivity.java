@@ -37,30 +37,17 @@ public class CardActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_card, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void init() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            //actionBar.setDisplayShowTitleEnabled(false);
             actionBar.hide();
         }
         setRecyclerView();
@@ -69,9 +56,6 @@ public class CardActivity extends AppCompatActivity {
         parseJson(tulingJson);
     }
 
-    /**
-     * 设置recyclerView
-     */
     public void setRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.display_recycler);
         recyclerView.setHasFixedSize(true);
@@ -81,12 +65,8 @@ public class CardActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    /**
-     * 转存json数据
-     *
-     * @param tulingJson
-     */
-    public void parseJson(TulingJson tulingJson) {
+
+    public void parseJson(TulingJson tulingJson) {   //存储json数据
         String code = tulingJson.code;
         switch (code) {
             case "308000":
@@ -99,12 +79,8 @@ public class CardActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 菜谱、视频、小说
-     *
-     * @param tulingJson
-     */
-    public void parseFood(TulingJson tulingJson) {
+
+    public void parseFood(TulingJson tulingJson) {  // 菜谱
         String text = tulingJson.text;
         for (Lists list : tulingJson.list) {
             Map<String, Object> foodMap = new HashMap<>();
@@ -121,12 +97,7 @@ public class CardActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 价格
-     *
-     * @param tulingJson
-     */
-    public void parsePrice(TulingJson tulingJson) {
+    public void parsePrice(TulingJson tulingJson) {  //价格
         String text = tulingJson.text;
         for (Lists list : tulingJson.list) {
             Map<String, Object> foodMap = new HashMap<>();

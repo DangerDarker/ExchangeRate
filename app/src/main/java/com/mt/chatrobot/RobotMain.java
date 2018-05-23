@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.mt.exchangerate.MainActivity;
+import com.mt.exchangerate.Plugin;
 import com.mt.exchangerate.R;
 import com.mt.request.HttpHelp;
 import com.mt.robot.tuling.DensityUtil;
@@ -52,8 +54,8 @@ import java.util.Random;
 
 public class RobotMain extends AppCompatActivity {
 
-    private final String WELCOME_MESSAGE = "喵，有什么要请教我的？你可以陪我聊天，或者问我你想知道的问题" +
-            "查火车，天气，价格，菜谱...，喵，我简直太厉害了，咩哈哈哈！";
+    private final String WELCOME_MESSAGE = "Master，有什么要请教小的的？小的可以陪您聊天，或者问小的您想知道的问题" +
+            "，快找我聊天吧！";
 
     private String userId;
     private RecyclerView recyclerView;
@@ -73,31 +75,19 @@ public class RobotMain extends AppCompatActivity {
         }
     };
 
-    /**
-     * 判断网络连接是否已开
-     */
-    public static boolean isConnected(Context context) {
-        boolean bisConnFlag = false;
-        ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo network = conManager.getActiveNetworkInfo();
-        if (network != null) {
-            bisConnFlag = conManager.getActiveNetworkInfo().isAvailable();
-        }
-        return bisConnFlag;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robot_mian);
         Toolbar toolbar = findViewById(R.id.toolbar_robot);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setUserId();
         setRecyclerView(); //设置聊天recyclerView
         setInput();  //设置输入框属性
         displayMessage(WELCOME_MESSAGE, true, false);  //显示欢迎消息
         //检查网络状态
-        if (!isConnected(getApplicationContext())) {
+        if (!Plugin.isNetworkAvailable(getApplicationContext())) {
             setNetworkMethod(this);
         }
         navigationView = findViewById(R.id.nav_view_robot);
@@ -112,6 +102,7 @@ public class RobotMain extends AppCompatActivity {
                   //  item.isChecked();
                     Intent intent = new Intent(RobotMain.this , MainActivity.class);
                     startActivity(intent);
+                   // finish();
                 }else{  //rate query
 
                 }
@@ -123,30 +114,20 @@ public class RobotMain extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        if(id == android.R.id.home)
+            drawerLayout.openDrawer(GravityCompat.START);
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * 设置userId
-     */
-    public void setUserId() {
+
+    public void setUserId() {//设置userId
         TelephonyManager telephonemanager = (TelephonyManager)
                 this.getSystemService(Context.TELEPHONY_SERVICE);
         try {
@@ -161,11 +142,9 @@ public class RobotMain extends AppCompatActivity {
 
     }
 
-    /**
-     * 设置recyclerView
-     */
-    public void setRecyclerView() {
-        recyclerView = (RecyclerView) findViewById(R.id.con_recycler);
+
+    public void setRecyclerView() {//设置recyclerView
+        recyclerView =  findViewById(R.id.con_recycler);
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setReverseLayout(true);
@@ -178,9 +157,9 @@ public class RobotMain extends AppCompatActivity {
      * 设置输入框
      */
     public void setInput() {
-        linearLayout = (LinearLayout) findViewById(R.id.input_line);
-        editText = (EditText) findViewById(R.id.input);
-        sendButton = (Button) findViewById(R.id.send_button);
+        linearLayout =  findViewById(R.id.input_line);
+        editText = findViewById(R.id.input);
+        sendButton =  findViewById(R.id.send_button);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -198,7 +177,6 @@ public class RobotMain extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() == 0) {
                 } else {
-                    // addButton.setVisibility(View.GONE);
                     sendButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -210,13 +188,8 @@ public class RobotMain extends AppCompatActivity {
         });
     }
 
-    /**
-     * 获取图灵机器人响应
-     *
-     * @param sendMessage
-     * @return
-     */
-    public Response getResponse(String sendMessage) {
+
+    public Response getResponse(String sendMessage) {//获取图灵机器人响应
         Log.d("wym", "message " + sendMessage);
         Tuling tuling = new Tuling();
         tuling.setInfo(sendMessage);
@@ -234,12 +207,8 @@ public class RobotMain extends AppCompatActivity {
         return response;
     }
 
-    /**
-     * 解析响应消息
-     *
-     * @param response
-     */
-    public void parse(String response) {
+
+    public void parse(String response) {//解析响应消息
         Log.d("wym", response);
         try {
             TulingJson tulingJson = JSON.parseObject(response, TulingJson.class);
@@ -324,21 +293,15 @@ public class RobotMain extends AppCompatActivity {
         }
     }
 
-    /**
-     * 发送消息
-     *
-     * @param view
-     */
-    public void sendMessage(View view) {
+    public void sendMessage(View view) {//发送消息
         //检查网络状态
-        if (!isConnected(getApplicationContext())) {
+        if (!Plugin.isNetworkAvailable(getApplicationContext())) {
             setNetworkMethod(this);
             return;
         }
         final String message = editText.getText().toString();
         displayMessage(message, false, false);
         editText.setText(null); //清空输入框
-        //editText.clearFocus();
         new Thread(new Runnable() {
 
             @Override
@@ -364,28 +327,11 @@ public class RobotMain extends AppCompatActivity {
             }
         }).start();
     }
-
-    /**
-     * 获取当前时间
-     *
-     * @return
-     */
-    public String getCurrentTime() {
-        Long currentTimeMillis = System.currentTimeMillis(); //获取当前时间
-        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//24小时制
-        String LgTime = sdFormat.format(currentTimeMillis);
-        return LgTime;
-    }
-
-    /**
-     * 显示消息
-     */
-    public void displayMessage(String sendMessage, Boolean isRobot, Boolean isHtml) {
+    public void displayMessage(String sendMessage, Boolean isRobot, Boolean isHtml) {//显示消息
         Map<String, Object> conversationMap = new HashMap<>();
         conversationMap.put("isRobot", isRobot);
         conversationMap.put("message", sendMessage);
         conversationMap.put("isHtml", isHtml);
-        String LgTime = getCurrentTime();
         conversationMap.put("date", "");
         if (isRobot) {
             conversationMap.put("avatar", R.mipmap.cat2);
@@ -393,14 +339,11 @@ public class RobotMain extends AppCompatActivity {
             conversationMap.put("avatar", R.mipmap.xiamu01);
         }
         conversationDisplay.add(0, conversationMap);
-        //conversationDisplay.add(conversationMap);
         mAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * 显示链接
-     */
-    public void displayUrl(TulingJson tulingJson) {
+
+    public void displayUrl(TulingJson tulingJson) {//显示链接
         String text = tulingJson.text;
         String display = "<html><head><title>" + text + "</title></head>";
         String url = tulingJson.url;
@@ -430,10 +373,7 @@ public class RobotMain extends AppCompatActivity {
         displayMessage(display, true, true);//显示为html
     }
 
-    /**
-     * 显示新闻
-     */
-    public void displayNews(TulingJson tulingJson) {
+    public void displayNews(TulingJson tulingJson) {// 显示新闻
         String text = tulingJson.text;
         String display = "<html><head><title>" + text + "</title></head><body>";
         for (Lists list : tulingJson.list) {
@@ -451,10 +391,7 @@ public class RobotMain extends AppCompatActivity {
         displayMessage(display, true, true);//显示为html
     }
 
-    /**
-     * 显示列车信息
-     */
-    public void displayTraning(TulingJson tulingJson) {
+    public void displayTraning(TulingJson tulingJson) {//显示列车信息
         String text = tulingJson.text;
         String url = "";
         String display2 = "<html><head><title>" + text + "</title></head>"
@@ -482,10 +419,7 @@ public class RobotMain extends AppCompatActivity {
         displayMessage(display, true, false);
     }
 
-    /**
-     * 显示航班信息
-     */
-    public void displayFight(TulingJson tulingJson) {
+    public void displayFight(TulingJson tulingJson) {// 显示航班信息
         String text = tulingJson.text;
         String display2 = "<html><head><title>" + text + "</title></head>"
                 + "<body><table border=1><tr><td>航班</td>" +
@@ -511,10 +445,8 @@ public class RobotMain extends AppCompatActivity {
         displayMessage(display, true, false);
     }
 
-    /**
-     * 显示 菜谱、视频、小说
-     */
-    public void displaySomething(TulingJson tulingJson) {
+
+    public void displaySomething(TulingJson tulingJson) {//显示 菜谱、视频、小说
         String text = tulingJson.text;
         String display = text + "\n" + "点击显示结果";
         displayMessage(display, true, false);
@@ -527,20 +459,12 @@ public class RobotMain extends AppCompatActivity {
 
     }
 
-    /**
-     * 显示酒店信息
-     *
-     * @param tulingJson
-     */
+
     public void displayHotel(TulingJson tulingJson) {
 
     }
 
-    /**
-     * 显示价格
-     *
-     * @param tulingJson
-     */
+
     public void displayPrice(TulingJson tulingJson) {
         String text = tulingJson.text;
         String display = text + "\n" + "点击显示结果";
@@ -553,12 +477,7 @@ public class RobotMain extends AppCompatActivity {
         startActivity(passIntent);
     }
 
-    /**
-     * 如果网络没有打开，提示打开网络设置界面
-     *
-     * @param context
-     */
-    public void setNetworkMethod(final Context context) {
+    public void setNetworkMethod(final Context context) {// 如果网络没有打开，提示打开网络设置界面
         new AlertDialog.Builder(this).setTitle("网络设置提示").setMessage("网络连接不可用,是否进行设置?")
                 .setPositiveButton("设置", new DialogInterface.OnClickListener() {
                     @Override
@@ -567,5 +486,11 @@ public class RobotMain extends AppCompatActivity {
                         context.startActivity(intent);
                     }
                 }).setNegativeButton("取消", null).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        finish();
     }
 }

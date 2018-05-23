@@ -8,7 +8,7 @@
     <!-- 边框 -->
     <stroke
         android:width="3dip"
-        android:color="#CDDC39" />
+        android:color="#a2b2e9" />
 
     <!-- 内边距 -->
     <padding
@@ -28,7 +28,7 @@
         android:height="180dp"/--><!-- 宽度和高度 -->
 
     <!-- 填充 -->
-    <solid android:color="#CDDC39" />
+    <solid android:color="#a2b2e9" />
     <!-- 填充的颜色 -->
 
 </shape>

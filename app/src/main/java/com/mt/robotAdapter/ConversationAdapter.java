@@ -33,12 +33,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         ViewHolder vh = new ViewHolder(view);
         vh.left_layout = view.findViewById(R.id.left_message);
         vh.right_layout = view.findViewById(R.id.right_message);
-        vh.left_imageView = (CircularImageView) view.findViewById(R.id.left_profile_image);
-        vh.right_imageView = (CircularImageView) view.findViewById(R.id.right_profile_image);
-        vh.left_tv1 = (TextView) view.findViewById(R.id.left_dialog);
-        vh.right_tv1 = (TextView) view.findViewById(R.id.right_dialog);
-        vh.left_tv2 = (TextView) view.findViewById(R.id.left_date);
-        vh.right_tv2 = (TextView) view.findViewById(R.id.right_date);
+        vh.left_imageView = view.findViewById(R.id.left_profile_image);
+        vh.right_imageView = view.findViewById(R.id.right_profile_image);
+        vh.left_tv1 =  view.findViewById(R.id.left_dialog);
+        vh.right_tv1 =  view.findViewById(R.id.right_dialog);
+       // vh.left_tv2 = view.findViewById(R.id.left_date);
+      //  vh.right_tv2 =  view.findViewById(R.id.right_date);
         return vh;
     }
 
@@ -46,7 +46,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     public void onBindViewHolder(ConversationAdapter.ViewHolder vh, int i) {
         Boolean isRobot = (Boolean) conversationDisplay.get(i).get("isRobot");
         String message = (String) conversationDisplay.get(i).get("message");
-        String date = (String) conversationDisplay.get(i).get("date");
+       // String date = (String) conversationDisplay.get(i).get("date");
         int avatar = (int) conversationDisplay.get(i).get("avatar");
         Boolean isHtml = (Boolean) conversationDisplay.get(i).get("isHtml");
         if (isRobot) {
@@ -55,11 +55,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             if (isHtml) {
                 vh.left_tv1.setText(Html.fromHtml(message));
                 vh.left_tv1.setMovementMethod(LinkMovementMethod.getInstance());//超链接可点击
-                //vh.left_tv1.setMovementMethod(ScrollingMovementMethod.getInstance());//滚动
             } else {
                 vh.left_tv1.setText(message);
             }
-            vh.left_tv2.setText(date);
+          //  vh.left_tv2.setText(date);
             vh.left_imageView.setImageResource(avatar);
         } else {
             vh.left_layout.setVisibility(View.GONE);
@@ -67,11 +66,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             if (isHtml) {
                 vh.right_tv1.setText(Html.fromHtml(message));
                 vh.right_tv1.setMovementMethod(LinkMovementMethod.getInstance());//超链接可点击
-                //vh.right_tv2.setMovementMethod(ScrollingMovementMethod.getInstance());//滚动
             } else {
                 vh.right_tv1.setText(message);
             }
-            vh.right_tv2.setText(date);
+           // vh.right_tv2.setText(date);
             vh.right_imageView.setImageResource(avatar);
         }
     }
@@ -89,8 +87,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         public CircularImageView right_imageView;  //右头像
         public TextView left_tv1;  //左聊天内容
         public TextView right_tv1;  //右聊天内容
-        public TextView left_tv2;  //左日期
-        public TextView right_tv2;  //左日期
+      //  public TextView left_tv2;  //左日期
+    //    public TextView right_tv2;  //左日期
 
         public ViewHolder(View itemView) {
             super(itemView);

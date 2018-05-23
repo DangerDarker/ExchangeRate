@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == android.R.id.home) {
+            if (menuItem.getItemId() == android.R.id.home) {
            // this.finish();
             drawerLayout.openDrawer(GravityCompat.START);
         }
