@@ -54,19 +54,19 @@ import java.util.Random;
 
 public class RobotMain extends AppCompatActivity {
 
-    private final String WELCOME_MESSAGE = "Master，有什么要请教小的的？小的可以陪您聊天，或者问小的您想知道的问题" +
-            "，快找我聊天吧！";
+    private final String WELCOME_MESSAGE = "Master，有什么要吩咐小的的？小的可以陪您聊天，或者问小的您想知道的问题" +
+            ".";
 
     private String userId;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private ConversationAdapter mAdapter;
     private List<Map<String, Object>> conversationDisplay = new ArrayList<>();
-    private NavigationView navigationView;
+    //private NavigationView navigationView;
     private LinearLayout linearLayout;
     private EditText editText;
     private Button sendButton;
-    private DrawerLayout drawerLayout;
+  //  private DrawerLayout drawerLayout;
     private Handler handler1 = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -90,30 +90,30 @@ public class RobotMain extends AppCompatActivity {
         if (!Plugin.isNetworkAvailable(getApplicationContext())) {
             setNetworkMethod(this);
         }
-        navigationView = findViewById(R.id.nav_view_robot);
-        drawerLayout = findViewById(R.id.robot_drawer);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                if(getString(R.string.waihui).equals(item.getTitle())){
-
-                }else if(getString(R.string.rate_query).equals(item.getTitle())){
-                  //  item.isChecked();
-                    Intent intent = new Intent(RobotMain.this , MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{  //rate query
-
-                }
-                drawerLayout.closeDrawers();
-                return true ;
-            }
-        });
+     //   navigationView = findViewById(R.id.nav_view_robot);
+       // drawerLayout = findViewById(R.id.robot_drawer);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                if(getString(R.string.waihui).equals(item.getTitle())){
+//
+//                }else if(getString(R.string.rate_query).equals(item.getTitle())){
+//                  //  item.isChecked();
+//                    Intent intent = new Intent(RobotMain.this , MainActivity.class);
+//                    startActivity(intent);
+//                }else{  //rate query
+//
+//                }
+//                drawerLayout.closeDrawers();
+//                return true ;
+//            }
+//        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+      //  getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -121,7 +121,8 @@ public class RobotMain extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == android.R.id.home)
-            drawerLayout.openDrawer(GravityCompat.START);
+            //drawerLayout.openDrawer(GravityCompat.START);
+            finish();
 
         return super.onOptionsItemSelected(item);
     }
@@ -486,11 +487,5 @@ public class RobotMain extends AppCompatActivity {
                         context.startActivity(intent);
                     }
                 }).setNegativeButton("取消", null).show();
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        finish();
     }
 }

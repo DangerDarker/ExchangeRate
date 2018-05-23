@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -42,8 +43,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private DrawerLayout  drawerLayout ;
-    private NavigationView navigationView ;
+//    private DrawerLayout  drawerLayout ;
+ ///   private NavigationView navigationView ;
     private RecyclerView recyclerView;
     private LinearLayout linearLayout;
     private EditText et ;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActionBar actionBar;
         actionBar = getSupportActionBar();
         if(actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
+       //     actionBar.setDisplayHomeAsUpEnabled(true);
         }
         isStarted = true;
         rateBuddies = new ArrayList<>();
@@ -78,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buddies = new ArrayList<>();
         Connector.getDatabase();// 建立数据库
         linearLayout = findViewById(R.id.source_currency);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+      //  drawerLayout = findViewById(R.id.drawer_layout);
+     //   navigationView = findViewById(R.id.nav_view);
         progressBar = findViewById(R.id.progress_bar);
         recyclerView = findViewById(R.id.country_rate);
         et = findViewById(R.id.edit_money);
@@ -114,23 +115,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         rateAdapter = new RateAdapter(buddies , this);
         recyclerView.setAdapter(rateAdapter);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                if(getString(R.string.rate_query).equals(item.getTitle())){
-
-                }else if(getString(R.string.waihui).equals(item.getTitle())){
-                    Intent intent = new Intent(MainActivity.this , RobotMain.class);
-                    startActivity(intent);
-                    finish();
-                }else{  //rate query
-
-                }
-                drawerLayout.closeDrawers();
-                return true ;
-            }
-        });
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                if(getString(R.string.rate_query).equals(item.getTitle())){
+//
+//                }else if(getString(R.string.waihui).equals(item.getTitle())){
+//                    Intent intent = new Intent(MainActivity.this , RobotMain.class);
+//                    startActivity(intent);
+//                    finish();
+//                }else{  //rate query
+//
+//                }
+//                drawerLayout.closeDrawers();
+//                return true ;
+//            }
+//        });
         Ok = findViewById(R.id.input_ok);
         Ok.setOnClickListener(this);
         et.addTextChangedListener(new TextWatcher() {
@@ -335,10 +336,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.nav_menu_robot , menu);
+        return true;
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-            if (menuItem.getItemId() == android.R.id.home) {
+        if (menuItem.getItemId() == android.R.id.home) {
            // this.finish();
-            drawerLayout.openDrawer(GravityCompat.START);
+            //drawerLayout.openDrawer(GravityCompat.START);
+        }else if(menuItem.getItemId() == R.id.robot){
+            Intent intent = new Intent(MainActivity.this , RobotMain.class);
+            startActivity(intent);
         }
         return  true;
     }
