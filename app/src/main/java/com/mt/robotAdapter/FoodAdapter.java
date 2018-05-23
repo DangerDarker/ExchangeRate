@@ -31,9 +31,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = mInflater.inflate(R.layout.item_display, viewGroup, false);
         ViewHolder vh = new ViewHolder(view);
-        vh.pic = (ImageView) view.findViewById(R.id.pic);
-        vh.title = (TextView) view.findViewById(R.id.info_title);
-        vh.rawMaterial = (TextView) view.findViewById(R.id.raw_material);
+        vh.pic = view.findViewById(R.id.pic);
+        vh.title =  view.findViewById(R.id.info_title);
+        vh.rawMaterial =  view.findViewById(R.id.raw_material);
         return vh;
     }
 
@@ -56,7 +56,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
                 break;
         }
         Picasso.with(context).load(icon).into(vh.pic);
-        //vh.pic.setBackgroundResource(R.mipmap.tc1);
     }
 
     @Override

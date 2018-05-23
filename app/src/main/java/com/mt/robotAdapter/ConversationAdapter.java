@@ -37,8 +37,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         vh.right_imageView = view.findViewById(R.id.right_profile_image);
         vh.left_tv1 =  view.findViewById(R.id.left_dialog);
         vh.right_tv1 =  view.findViewById(R.id.right_dialog);
-       // vh.left_tv2 = view.findViewById(R.id.left_date);
-      //  vh.right_tv2 =  view.findViewById(R.id.right_date);
         return vh;
     }
 
@@ -58,7 +56,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             } else {
                 vh.left_tv1.setText(message);
             }
-          //  vh.left_tv2.setText(date);
             vh.left_imageView.setImageResource(avatar);
         } else {
             vh.left_layout.setVisibility(View.GONE);
@@ -69,7 +66,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             } else {
                 vh.right_tv1.setText(message);
             }
-           // vh.right_tv2.setText(date);
             vh.right_imageView.setImageResource(avatar);
         }
     }
@@ -87,9 +83,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         public CircularImageView right_imageView;  //右头像
         public TextView left_tv1;  //左聊天内容
         public TextView right_tv1;  //右聊天内容
-      //  public TextView left_tv2;  //左日期
-    //    public TextView right_tv2;  //左日期
-
         public ViewHolder(View itemView) {
             super(itemView);
         }

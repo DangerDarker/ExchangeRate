@@ -67,7 +67,7 @@
             android:id="@+id/right_profile_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@mipmap/cat2"
+            android:src="@mipmap/xiamu01"
             app:border_color="#FFFFFF"
             app:border_width="2dp"
             app:shadow="true"

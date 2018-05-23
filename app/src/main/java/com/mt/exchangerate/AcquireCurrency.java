@@ -27,7 +27,6 @@ public class AcquireCurrency implements  Iterable{
         try{
             int result = ob.getInt(Config.RESULT_CODE);
             if(result == 0){
-                //JSONArray array = ob.getJSONArray("result");
                 Iterator<CurrencyBuddy> it = iterator();
                 if(it != null){
                     while(it.hasNext()){

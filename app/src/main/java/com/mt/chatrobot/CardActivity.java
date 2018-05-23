@@ -57,7 +57,7 @@ public class CardActivity extends AppCompatActivity {
     }
 
     public void setRecyclerView() {
-        recyclerView = (RecyclerView) findViewById(R.id.display_recycler);
+        recyclerView =  findViewById(R.id.display_recycler);
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);

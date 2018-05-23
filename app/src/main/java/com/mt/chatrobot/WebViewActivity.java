@@ -38,7 +38,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     public void setWebView() {
-        webView = (WebView) findViewById(R.id.webView);
+        webView = findViewById(R.id.webView);
         Intent intent = getIntent();
         String html = intent.getStringExtra("html");
         webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);

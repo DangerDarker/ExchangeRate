@@ -62,11 +62,9 @@ public class RobotMain extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
     private ConversationAdapter mAdapter;
     private List<Map<String, Object>> conversationDisplay = new ArrayList<>();
-    //private NavigationView navigationView;
     private LinearLayout linearLayout;
     private EditText editText;
     private Button sendButton;
-  //  private DrawerLayout drawerLayout;
     private Handler handler1 = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -90,38 +88,13 @@ public class RobotMain extends AppCompatActivity {
         if (!Plugin.isNetworkAvailable(getApplicationContext())) {
             setNetworkMethod(this);
         }
-     //   navigationView = findViewById(R.id.nav_view_robot);
-       // drawerLayout = findViewById(R.id.robot_drawer);
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                if(getString(R.string.waihui).equals(item.getTitle())){
-//
-//                }else if(getString(R.string.rate_query).equals(item.getTitle())){
-//                  //  item.isChecked();
-//                    Intent intent = new Intent(RobotMain.this , MainActivity.class);
-//                    startActivity(intent);
-//                }else{  //rate query
-//
-//                }
-//                drawerLayout.closeDrawers();
-//                return true ;
-//            }
-//        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-      //  getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == android.R.id.home)
-            //drawerLayout.openDrawer(GravityCompat.START);
             finish();
 
         return super.onOptionsItemSelected(item);
@@ -335,7 +308,7 @@ public class RobotMain extends AppCompatActivity {
         conversationMap.put("isHtml", isHtml);
         conversationMap.put("date", "");
         if (isRobot) {
-            conversationMap.put("avatar", R.mipmap.cat2);
+            conversationMap.put("avatar", R.mipmap.robot);
         } else {
             conversationMap.put("avatar", R.mipmap.xiamu01);
         }
