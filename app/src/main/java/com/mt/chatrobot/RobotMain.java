@@ -102,7 +102,7 @@ public class RobotMain extends AppCompatActivity {
                   //  item.isChecked();
                     Intent intent = new Intent(RobotMain.this , MainActivity.class);
                     startActivity(intent);
-                   // finish();
+                    finish();
                 }else{  //rate query
 
                 }

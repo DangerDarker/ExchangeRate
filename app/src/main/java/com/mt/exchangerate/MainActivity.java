@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else if(getString(R.string.waihui).equals(item.getTitle())){
                     Intent intent = new Intent(MainActivity.this , RobotMain.class);
                     startActivity(intent);
+                    finish();
                 }else{  //rate query
 
                 }
