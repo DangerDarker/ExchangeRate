@@ -30,10 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AllCurrencyActivity" />
-        <activity android:name=".FrateActivity" />
         <activity android:name="com.mt.chatrobot.RobotMain" />
-        <activity android:name="com.mt.chatrobot.CardActivity" />
-        <activity android:name="com.mt.chatrobot.WebViewActivity"></activity>
+
     </application>
 
 </manifest>

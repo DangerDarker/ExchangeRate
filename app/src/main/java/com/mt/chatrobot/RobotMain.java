@@ -4,16 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.design.internal.NavigationMenu;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,12 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.mt.exchangerate.MainActivity;
 import com.mt.exchangerate.Plugin;
 import com.mt.exchangerate.R;
 import com.mt.request.HttpHelp;
 import com.mt.robot.tuling.DensityUtil;
-import com.mt.robot.tuling.Lists;
 import com.mt.robot.tuling.Tuling;
 import com.mt.robot.tuling.TulingJson;
 import com.mt.robotAdapter.ConversationAdapter;
@@ -44,7 +35,6 @@ import com.squareup.okhttp.Response;
 
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -193,38 +183,6 @@ public class RobotMain extends AppCompatActivity {
                     String text = tulingJson.text;
                     displayMessage(text, true, false);
                     break;
-                case "200000":
-                    //网址类数据
-                    displayUrl(tulingJson);
-                    break;
-                case "302000":
-                    //新闻
-                    displayNews(tulingJson);
-                    break;
-                case "304000":
-                    //应用、软件、下载
-                    displayApp(tulingJson);
-                    break;
-                case "305000":
-                    //列车
-                    displayTraning(tulingJson);
-                    break;
-                case "306000":
-                    //航班
-                    displayFight(tulingJson);
-                    break;
-                case "308000":
-                    //菜谱、视频、小说
-                    displaySomething(tulingJson);
-                    break;
-                case "309000":
-                    //酒店
-                    displayHotel(tulingJson);
-                    break;
-                case "311000":
-                    //价格
-                    displayPrice(tulingJson);
-                    break;
                 case "40001":
                     //key的长度错误（32位）
                     Toast.makeText(RobotMain.this,
@@ -260,6 +218,10 @@ public class RobotMain extends AppCompatActivity {
                     Toast.makeText(RobotMain.this,
                             "（系统）服务器数据格式异常", Toast.LENGTH_SHORT).show();
                     break;
+                    default:
+                        String textRobot = "小的暂时不能理解这个，主人说个别的吧，嘻嘻。";
+                        displayMessage(textRobot , true , false);
+                        break;
             }
         } catch (Exception e) {
             Toast.makeText(RobotMain.this,
@@ -315,142 +277,6 @@ public class RobotMain extends AppCompatActivity {
         conversationDisplay.add(0, conversationMap);
         mAdapter.notifyDataSetChanged();
     }
-
-
-    public void displayUrl(TulingJson tulingJson) {//显示链接
-        String text = tulingJson.text;
-        String display = "<html><head><title>" + text + "</title></head>";
-        String url = tulingJson.url;
-        display = display + "<body><p><strong><a href=\"" + url + "\">点此链接</a></strong></p>"
-                + "</body></html>";
-        displayMessage(display, true, true);
-    }
-
-    /**
-     * 下载应用
-     */
-    public void displayApp(TulingJson tulingJson) {
-        String text = tulingJson.text;
-        String display = "<html><head><title>" + text + "</title></head><body>";
-        for (Lists list : tulingJson.list) {
-            String name = list.name;
-            String count = list.count;
-            String detailUrl = list.detailurl;
-            String icon = list.icon;
-            display = display + "<p><strong><a href=\"" + detailUrl + "\">" + name
-                    + "</a></strong></p>";
-            if (!icon.equals("")) {
-                display = display + "<img src=\"" + icon + "\"/>";
-            }
-        }
-        display = display + "</body></html>";
-        displayMessage(display, true, true);//显示为html
-    }
-
-    public void displayNews(TulingJson tulingJson) {// 显示新闻
-        String text = tulingJson.text;
-        String display = "<html><head><title>" + text + "</title></head><body>";
-        for (Lists list : tulingJson.list) {
-            String article = list.article;
-            String source = list.source;
-            String detailUrl = list.detailurl;
-            String icon = list.icon;
-            display = display + "<p><strong><a href=\"" + detailUrl + "\">" + article
-                    + "</a></strong></p>";
-            if (!icon.equals("")) {
-                display = display + "<img src=\"" + icon + "\"/>";
-            }
-        }
-        display = display + "</body></html>";
-        displayMessage(display, true, true);//显示为html
-    }
-
-    public void displayTraning(TulingJson tulingJson) {//显示列车信息
-        String text = tulingJson.text;
-        String url = "";
-        String display2 = "<html><head><title>" + text + "</title></head>"
-                + "<body><table border=1><tr><td>班次</td>" +
-                "<td>起点站</td><td>终点站</td><td>起始时间</td><td>到站时间</td>";
-        for (Lists list : tulingJson.list) {
-            String trainNum = list.trainnum;
-            String start = list.start;
-            String terminal = list.terminal;
-            String starttime = list.starttime;
-            String endtime = list.endtime;
-            String detailUrl = list.detailurl;
-            String icon = list.icon;
-            display2 = display2 + "<tr><td><a href=\"" + detailUrl + "\">"
-                    + trainNum + "</td><td>" + start + "</td><td>"
-                    + terminal + "</td><td>" + starttime
-                    + "</td><td>" + endtime + "</td>";
-            url = detailUrl;
-        }
-        display2 = display2 + "</table></body></html>";
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra("html", display2);
-        startActivity(intent);
-        String display = text + "\n" + "点击显示结果";
-        displayMessage(display, true, false);
-    }
-
-    public void displayFight(TulingJson tulingJson) {// 显示航班信息
-        String text = tulingJson.text;
-        String display2 = "<html><head><title>" + text + "</title></head>"
-                + "<body><table border=1><tr><td>航班</td>" +
-                "<td>路线</td><td>起飞时间</td><td>到达时间</td><td>航班状态</td>";
-        for (Lists list : tulingJson.list) {
-            String flight = list.flight;
-            String route = list.route;
-            String starttime = list.starttime;
-            String endtime = list.endtime;
-            String detailUrl = list.detailurl;
-            String state = list.state;
-            String icon = list.icon;
-            display2 = display2 + "<tr><td><a href=\"" + detailUrl + "\">"
-                    + flight + "</td><td>" + route + "</td><td>"
-                    + starttime + "</td><td>" + endtime
-                    + "</td><td>" + state + "</td>";
-        }
-        display2 = display2 + "</table></body></html>";
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra("html", display2);
-        startActivity(intent);
-        String display = text + "\n" + "点击显示结果";
-        displayMessage(display, true, false);
-    }
-
-
-    public void displaySomething(TulingJson tulingJson) {//显示 菜谱、视频、小说
-        String text = tulingJson.text;
-        String display = text + "\n" + "点击显示结果";
-        displayMessage(display, true, false);
-        Intent passIntent = new Intent();
-        passIntent.setClass(this, CardActivity.class);
-        Bundle bundleObject = new Bundle();
-        bundleObject.putSerializable("TulingJson", tulingJson);
-        passIntent.putExtras(bundleObject);  //传递自定义类
-        startActivity(passIntent);
-
-    }
-
-
-    public void displayHotel(TulingJson tulingJson) {
-
-    }
-
-
-    public void displayPrice(TulingJson tulingJson) {
-        String text = tulingJson.text;
-        String display = text + "\n" + "点击显示结果";
-        displayMessage(display, true, false);
-        Intent passIntent = new Intent();
-        passIntent.setClass(this, CardActivity.class);
-        Bundle bundleObject = new Bundle();
-        bundleObject.putSerializable("TulingJson", tulingJson);
-        passIntent.putExtras(bundleObject);  //传递自定义类
-        startActivity(passIntent);
-    }
-
     public void setNetworkMethod(final Context context) {// 如果网络没有打开，提示打开网络设置界面
         new AlertDialog.Builder(this).setTitle("网络设置提示").setMessage("网络连接不可用,是否进行设置?")
                 .setPositiveButton("设置", new DialogInterface.OnClickListener() {
